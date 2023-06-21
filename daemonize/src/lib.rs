@@ -359,10 +359,16 @@ impl<T> Daemonize<T> {
                 },
                 Err(err) => Outcome::Parent(Err(err.into())),
                 Ok(None) => match self.execute_child() {
-                    Ok(privileged_action_result) => Outcome::Child(Ok(Child {
-                        privileged_action_result,
-                    })),
-                    Err(err) => Outcome::Child(Err(err.into())),
+                    Ok(privileged_action_result) => {
+                        println!("execute_child : Ok with privileged_action_result");
+                        Outcome::Child(Ok(Child {
+                            privileged_action_result,
+                        }))
+                    },
+                    Err(err) => {
+                        println!("execute_child : err : {}", err);
+                        Outcome::Child(Err(err.into()))
+                    },
                 },
             }
         }
